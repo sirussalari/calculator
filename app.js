@@ -32,6 +32,7 @@ function operate(x, operator, y) {
 const display = document.querySelector('#display');
 const digits = document.querySelector('#digits').children;
 const operators = document.querySelector('#operators').children;
+const clear = document.querySelector('#clear');
 let displayValue = '0';
 display.textContent = displayValue;
 let firstNumber = null;
@@ -94,3 +95,12 @@ for (let operator of operators) {
         }
     })
 }
+
+clear.addEventListener('click', () => {
+    displayValue = '0';
+    display.textContent = displayValue;
+    firstNumber = null;
+    secondNumber = null;
+    operatorChoice = null;
+    reset = false;
+})
