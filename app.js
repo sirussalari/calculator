@@ -35,9 +35,8 @@ const operators = document.querySelector('#operators').children;
 let displayValue = '';
 let firstNumber = null;
 let secondNumber = null;
-let operatorChoice = '';
+let operatorChoice = null;
 let reset = false;
-let operatorClicked = false;
 
 for (let digit of digits) {
     digit.addEventListener('click', () => {
@@ -46,19 +45,37 @@ for (let digit of digits) {
             display.textContent = displayValue;
             reset = false;
         }
-        displayValue += digit.textContent;
-        display.textContent = displayValue;
-        
+        if (firstNumber == displayValue) {
+            displayValue = digit.textContent;
+            display.textContent = displayValue;
+
+        }
+        else {
+            displayValue += digit.textContent;
+            display.textContent = displayValue;
+        }
     })
 }
 
 for (let operator of operators) {
     operator.addEventListener('click', () => {
-        if (!operatorClicked) {
-            firstNumber = parseInt(displayValue);
-            operatorChoice = operator.textContent;
-            displayValue = '';
+        if (operator.textContent === '=') {
+            secondNumber = parseFloat(displayValue);
+            displayValue = operate(firstNumber, operatorChoice, secondNumber);
             display.textContent = displayValue;
+            firstNumber = null;
+            operatorChoice = '';
+            secondNumber = null;
+            reset = true;
+        }
+        else {
+            if (operatorChoice) {
+                secondNumber = parseFloat(displayValue);
+                displayValue = operate(firstNumber, operatorChoice, secondNumber);
+                display.textContent = displayValue;
+            }
+            firstNumber = parseFloat(displayValue);
+            operatorChoice = operator.textContent;
             if (operator.textContent === '+') {
                 operatorChoice = 'add';
             }
@@ -70,19 +87,6 @@ for (let operator of operators) {
             }
             else if (operator.textContent === '/') {
                 operatorChoice = 'divide';
-            }
-            operatorClicked = true;
-        }
-        else {
-            if (operator.textContent === '=') {
-                secondNumber = parseInt(displayValue);
-                displayValue = operate(firstNumber, operatorChoice, secondNumber);
-                display.textContent = displayValue;
-                operatorClicked = false;
-                firstNumber = null;
-                operatorChoice = '';
-                secondNumber = null;
-                reset = true;
             }
         }
     })
