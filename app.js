@@ -39,6 +39,7 @@ let firstNumber = null;
 let secondNumber = null;
 let operatorChoice = null;
 let reset = false;
+let init = true;
 
 for (let digit of digits) {
     digit.addEventListener('click', () => {
@@ -47,9 +48,10 @@ for (let digit of digits) {
             display.textContent = displayValue;
             reset = false;
         }
-        if (firstNumber == displayValue || displayValue == 0) {
+        if (firstNumber == displayValue || init) {
             displayValue = digit.textContent;
             display.textContent = displayValue;
+            init = false;
 
         }
         else {
@@ -62,10 +64,15 @@ for (let digit of digits) {
 for (let operator of operators) {
     operator.addEventListener('click', () => {
         if (operator.textContent === '=') {
-            if (firstNumber) {
+            if (firstNumber !== null) {
                 secondNumber = parseFloat(displayValue);
                 displayValue = operate(firstNumber, operatorChoice, secondNumber);
-                display.textContent = displayValue;
+                if (operatorChoice === 'divide' && secondNumber === 0) {
+                    display.textContent = 'ERROR'
+                }
+                else {
+                    display.textContent = displayValue;
+                }
                 firstNumber = null;
                 operatorChoice = '';
                 secondNumber = null;
@@ -76,7 +83,12 @@ for (let operator of operators) {
             if (operatorChoice) {
                 secondNumber = parseFloat(displayValue);
                 displayValue = operate(firstNumber, operatorChoice, secondNumber);
-                display.textContent = displayValue;
+                if (operatorChoice === 'divide' && secondNumber === 0) {
+                    display.textContent = 'ERROR'
+                }
+                else {
+                    display.textContent = displayValue;
+                }
             }
             firstNumber = parseFloat(displayValue);
             operatorChoice = operator.textContent;
@@ -103,4 +115,5 @@ clear.addEventListener('click', () => {
     secondNumber = null;
     operatorChoice = null;
     reset = false;
+    init = true;
 })
