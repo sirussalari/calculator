@@ -40,6 +40,7 @@ let secondNumber = null;
 let operatorChoice = null;
 let reset = false;
 let init = true;
+const decimalButton = document.querySelector('#decimal');
 
 for (let digit of digits) {
     digit.addEventListener('click', () => {
@@ -116,4 +117,11 @@ clear.addEventListener('click', () => {
     operatorChoice = null;
     reset = false;
     init = true;
+})
+
+decimalButton.addEventListener('click', () => {
+    if (!displayValue.includes('.')) {
+        displayValue += '.';
+        display.textContent = displayValue;
+    }
 })
