@@ -1,0 +1,65 @@
+body {
+    margin: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+#display {
+    font-size: 50px;
+}
+
+#calculator {
+    color: white;
+    font-weight: bold;
+}
+button {
+    height: 100px;
+    width: 100px;
+    border-style: solid;
+    border-radius: 50%;
+    font-weight: bold;
+    padding: 0;
+    font-size: 40px;
+}
+
+#digits button {
+    background-color: rgb(43, 42, 42);
+    border-color: rgb(43, 42, 42);
+    color: white;
+}
+
+#digits button:active {
+    background-color: grey;
+}
+
+#operators button {
+    background-color: orange;
+    border-color: orange;
+    color: white;
+    transition: all .3s ease-in;
+}
+
+#operators button:active {
+    background-color: white;
+    color: orange;
+    border-color: white;
+}
+
+#clear {
+    background-color: rgb(146, 145, 145);
+}
+
+#clear:active {
+    background-color: rgb(201, 197, 197);
+}
+
+#digits {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+    align-items: center;
+    gap: 5px;
+}
