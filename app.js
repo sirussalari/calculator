@@ -41,19 +41,28 @@ let operatorChoice = null;
 let reset = false;
 let init = true;
 const decimalButton = document.querySelector('#decimal');
+let firstNumberChosen = false;
 
 for (let digit of digits) {
     digit.addEventListener('click', () => {
-        if (reset) {
-            displayValue = '';
-            display.textContent = displayValue;
-            reset = false;
+        clear.textContent = 'C';
+        for (let operator of operators) {
+            operator.style.color = 'white';
+            operator.style.backgroundColor = 'orange';
+            operator.style.borderColor = 'orange';
         }
-        if (firstNumber == displayValue || init) {
+        if (reset || firstNumberChosen || init) {
             displayValue = digit.textContent;
             display.textContent = displayValue;
-            init = false;
-
+            if (reset) {
+                reset = false;
+            }
+            if (init) {
+                init = false;
+            }
+            if (firstNumberChosen) {
+                firstNumberChosen = false;
+            }
         }
         else {
             displayValue += digit.textContent;
@@ -78,10 +87,19 @@ for (let operator of operators) {
                 operatorChoice = '';
                 secondNumber = null;
                 reset = true;
+                firstNumberChosen = false;
             }
         }
         else {
-            if (operatorChoice) {
+            for (let operator of operators) {
+                operator.style.color = 'white';
+                operator.style.backgroundColor = 'orange';
+                operator.style.borderColor = 'orange';
+            }
+            operator.style.color = 'orange';
+            operator.style.backgroundColor = 'white';
+            operator.style.borderColor = 'white';
+            if (operatorChoice && !firstNumberChosen) {
                 secondNumber = parseFloat(displayValue);
                 displayValue = operate(firstNumber, operatorChoice, secondNumber);
                 if (operatorChoice === 'divide' && secondNumber === 0) {
@@ -92,6 +110,7 @@ for (let operator of operators) {
                 }
             }
             firstNumber = parseFloat(displayValue);
+            firstNumberChosen = true;
             operatorChoice = operator.textContent;
             if (operator.textContent === '+') {
                 operatorChoice = 'add';
@@ -117,6 +136,7 @@ clear.addEventListener('click', () => {
     operatorChoice = null;
     reset = false;
     init = true;
+    clear.textContent = 'AC';
 })
 
 decimalButton.addEventListener('click', () => {
