@@ -74,15 +74,18 @@ button {
     border-color: white;
 }
 
-#clear {
+#topButtons {
+    display: flex;
+    gap: 15px;
+}
+
+#clear, #positiveNegative, #percent {
     background-color: rgb(146, 145, 145);
     border-color: rgb(146, 145, 145);
-    align-self: flex-start;
-    justify-self: flex-start;
     color: black;
 }
 
-#clear:active {
+#clear:active, #positiveNegative:active, #percent:active {
     background-color: rgb(201, 197, 197);
 }
 
