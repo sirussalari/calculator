@@ -33,6 +33,11 @@ const display = document.querySelector('#display');
 const digits = document.querySelector('#digits').children;
 const operators = document.querySelector('#operators').children;
 const clear = document.querySelector('#clear');
+const decimalButton = document.querySelector('#decimal');
+const leftSemiCircle = document.querySelector('#leftSemiCircle');
+const rightSemiCircle = document.querySelector('#rightSemiCircle');
+const zeroButton = document.querySelector('#zero');
+const zeroButtonElements = [leftSemiCircle, rightSemiCircle, zeroButton];
 let displayValue = '0';
 display.textContent = displayValue;
 let firstNumber = null;
@@ -40,7 +45,6 @@ let secondNumber = null;
 let operatorChoice = null;
 let reset = false;
 let init = true;
-const decimalButton = document.querySelector('#decimal');
 let firstNumberChosen = false;
 
 for (let digit of digits) {
@@ -118,10 +122,10 @@ for (let operator of operators) {
             else if (operator.textContent === '-') {
                 operatorChoice = 'subtract';
             }
-            else if (operator.textContent === '*') {
-                operatorChoice = 'multiply'
+            else if (operator.classList.contains('multiply')) {
+                operatorChoice = 'multiply';
             }
-            else if (operator.textContent === '/') {
+            else if (operator.classList.contains('divide')) {
                 operatorChoice = 'divide';
             }
         }
@@ -137,6 +141,11 @@ clear.addEventListener('click', () => {
     reset = false;
     init = true;
     clear.textContent = 'AC';
+    for (let operator of operators) {
+        operator.style.color = 'white';
+        operator.style.backgroundColor = 'orange';
+        operator.style.borderColor = 'orange';
+    }
 })
 
 decimalButton.addEventListener('click', () => {
@@ -144,4 +153,19 @@ decimalButton.addEventListener('click', () => {
         displayValue += '.';
         display.textContent = displayValue;
     }
+})
+
+zeroButtonElements.forEach(element => {
+    element.addEventListener('mousedown', () => {
+        zeroButtonElements.forEach(element => {
+            element.style.backgroundColor = 'grey';
+            element.style.borderColor = 'grey';
+        })
+    })
+    element.addEventListener('mouseup', () => {
+        zeroButtonElements.forEach(element => {
+            element.style.backgroundColor = 'rgb(43, 42, 42)';
+            element.style.borderColor = 'rgb(43, 42, 42)';
+        })
+    })
 })
