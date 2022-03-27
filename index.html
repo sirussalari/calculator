@@ -10,27 +10,33 @@
 <body>
     <div id = 'calculator'>
         <div id = 'display'></div>
-        <div id = 'digits'>
-            <button id = 'decimal'>.</button>
-            <button>0</button>
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>4</button>
-            <button>5</button>
-            <button>6</button>
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
+        <div id = 'wrapper'>
+            <div id = 'digitOperatorContainer'>
+                <div id = 'clearDigitContainer'>
+                    <button id = 'clear'>AC</button>
+                    <div id = 'digits'>
+                        <button>7</button>
+                        <button>8</button>
+                        <button>9</button>
+                        <button>4</button>
+                        <button>5</button>
+                        <button>6</button>
+                        <button>1</button>
+                        <button>2</button>
+                        <button>3</button>
+                        <div id = 'container'><div id = 'leftSemiCircle'></div><button id = 'zero'>0</button><div id = 'rightSemiCircle'></div></div>
+                        <button id = 'decimal'>.</button>
+                    </div>
+                </div>
+                <div id = 'operators'>
+                    <button class = 'divide'>&divide;</button>
+                    <button class = 'multiply'>&times;</button>
+                    <button>-</button>
+                    <button>+</button>
+                    <button id = 'equal'>=</button>
+                </div>
+            </div>
         </div>
-        <div id = 'operators'>
-            <button>+</button>
-            <button>-</button>
-            <button>*</button>
-            <button>/</button>
-            <button>=</button>
-        </div>
-        <button id = 'clear'>AC</button>
     </div>
     <script src = 'app.js'></script>
 </body>
