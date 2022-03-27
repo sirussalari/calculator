@@ -77,7 +77,7 @@ for (let digit of digits) {
 
 for (let operator of operators) {
     operator.addEventListener('click', () => {
-        if (operator.textContent === '=') {
+        if (operator.classList.contains('equals')) {
             if (firstNumber !== null) {
                 secondNumber = parseFloat(displayValue);
                 displayValue = operate(firstNumber, operatorChoice, secondNumber);
@@ -116,10 +116,10 @@ for (let operator of operators) {
             firstNumber = parseFloat(displayValue);
             firstNumberChosen = true;
             operatorChoice = operator.textContent;
-            if (operator.textContent === '+') {
+            if (operator.classList.contains('addition')) {
                 operatorChoice = 'add';
             }
-            else if (operator.textContent === '-') {
+            else if (operator.classList.contains('subtract')) {
                 operatorChoice = 'subtract';
             }
             else if (operator.classList.contains('multiply')) {
