@@ -69,8 +69,16 @@ for (let digit of digits) {
             }
         }
         else {
-            displayValue += digit.textContent;
-            display.textContent = displayValue;
+            if (digit.textContent !== '.') {
+                displayValue += digit.textContent;
+                display.textContent = displayValue;
+            }
+            else {
+                if (!displayValue.includes('.')) {
+                    displayValue += '.';
+                    display.textContent = displayValue;
+                }
+            }
         }
     })
 }
@@ -145,13 +153,6 @@ clear.addEventListener('click', () => {
         operator.style.color = 'white';
         operator.style.backgroundColor = 'orange';
         operator.style.borderColor = 'orange';
-    }
-})
-
-decimalButton.addEventListener('click', () => {
-    if (!displayValue.includes('.')) {
-        displayValue += '.';
-        display.textContent = displayValue;
     }
 })
 
