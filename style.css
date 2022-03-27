@@ -4,24 +4,44 @@ body {
     justify-content: center;
     align-items: center;
     background-color: black;
+    font-family: Helvetica;
 }
 
 #display {
-    font-size: 50px;
+    font-size: 70px;
+    align-self: flex-end;
+    padding-right: 45px;
+    font-weight: normal;
 }
 
 #calculator {
+    height: 660px;
     color: white;
     font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 button {
     height: 100px;
     width: 100px;
     border-style: solid;
     border-radius: 50%;
-    font-weight: bold;
     padding: 0;
     font-size: 40px;
+}
+
+#digitOperatorContainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 15px;
+}
+
+#clearDigitContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 #digits button {
@@ -32,13 +52,20 @@ button {
 
 #digits button:active {
     background-color: grey;
+    border-color: grey;
+}
+
+#operators {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 #operators button {
     background-color: orange;
     border-color: orange;
     color: white;
-    transition: all .3s ease-in;
+    transition: all .25s ease-in;
 }
 
 #operators button:active {
@@ -49,6 +76,8 @@ button {
 
 #clear {
     background-color: rgb(146, 145, 145);
+    align-self: flex-start;
+    justify-self: flex-start;
 }
 
 #clear:active {
@@ -58,8 +87,39 @@ button {
 #digits {
     display: grid;
     grid-template-rows: repeat(4, 1fr);
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     justify-items: center;
     align-items: center;
-    gap: 5px;
+    gap: 15px;
+}
+
+#zero {
+    border-radius: 0%;
+    height: 100;
+    width: 200;
+}
+
+#container {
+    display: flex;
+    grid-column: span 2;
+    width: 215px;
+    height: 100px;
+    margin: 0;
+    padding: 0;
+}
+
+#leftSemiCircle, #rightSemiCircle {
+    width: 100px;
+    height: 100px;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(43, 42, 42);
+}
+
+#leftSemiCircle {
+    border-radius: 50% 0% 0% 50%;
+}
+
+#rightSemiCircle {
+    border-radius: 0% 50% 50% 0%;
 }
