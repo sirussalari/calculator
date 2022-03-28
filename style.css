@@ -1,6 +1,5 @@
 body {
-    margin: 10%;
-    width: 80%;
+    margin: 0% 2% 0% 2%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -8,7 +7,6 @@ body {
     align-items: center;
     background-color: black;
     font-family: Helvetica;
-    min-width: 0;
 }
 
 #display {
@@ -19,6 +17,7 @@ body {
 }
 
 #calculator {
+    padding: 10%;
     color: white;
     font-weight: bold;
     display: flex;
