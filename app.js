@@ -164,6 +164,10 @@ clear.addEventListener('click', () => {
 })
 
 zeroButtonElements.forEach(element => {
+    element.addEventListener('click', () => {
+        displayValue += '0';
+        display.textContent = displayValue; 
+    })
     element.addEventListener('mousedown', () => {
         zeroButtonElements.forEach(element => {
             element.style.backgroundColor = 'grey';
