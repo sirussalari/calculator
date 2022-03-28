@@ -37,6 +37,7 @@ const leftSemiCircle = document.querySelector('#leftSemiCircle');
 const rightSemiCircle = document.querySelector('#rightSemiCircle');
 const zeroButton = document.querySelector('#zero');
 const positiveNegative = document.querySelector('#positiveNegative');
+const percent = document.querySelector('#percent');
 const zeroButtonElements = [leftSemiCircle, rightSemiCircle, zeroButton];
 let displayValue = '0';
 display.textContent = displayValue;
@@ -91,6 +92,11 @@ for (let digit of digits) {
 
 for (let operator of operators) {
     operator.addEventListener('click', () => {
+        for (let operator of operators) {
+            operator.style.color = 'white';
+            operator.style.backgroundColor = 'orange';
+            operator.style.borderColor = 'orange';
+        }
         if (operator.classList.contains('equals')) {
             if (firstNumber !== null) {
                 secondNumber = parseFloat(displayValue);
@@ -109,11 +115,6 @@ for (let operator of operators) {
             }
         }
         else {
-            for (let operator of operators) {
-                operator.style.color = 'white';
-                operator.style.backgroundColor = 'orange';
-                operator.style.borderColor = 'orange';
-            }
             operator.style.color = 'orange';
             operator.style.backgroundColor = 'white';
             operator.style.borderColor = 'white';
@@ -188,4 +189,10 @@ positiveNegative.addEventListener('click', () => {
         displayValue = displayValue.toString();
         display.textContent = displayValue;
     }
+})
+
+percent.addEventListener('click', () => {
+    displayValue /= 100;
+    displayValue = displayValue.toString();
+    display.textContent = displayValue;
 })
