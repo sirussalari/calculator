@@ -8,39 +8,27 @@
     <title>Calculator</title>
 </head>
 <body>
-    <div id = 'calculator'>
-        <div id = 'display'></div>
-        <div id = 'wrapper'>
-            <div id = 'digitOperatorContainer'>
-                <div id = 'clearDigitContainer'>
-                    <div id = 'topButtons'>
-                        <button id = 'clear'>AC</button>
-                        <button id = 'positiveNegative'><sup>&plus;</sup>/<sub>&minus;</sub></button>
-                        <button id = 'percent'>&percnt;</button>
-                    </div>
-                    <div id = 'digits'>
-                        <button>7</button>
-                        <button>8</button>
-                        <button>9</button>
-                        <button>4</button>
-                        <button>5</button>
-                        <button>6</button>
-                        <button>1</button>
-                        <button>2</button>
-                        <button>3</button>
-                        <div id = 'container'><div id = 'leftSemiCircle'></div><button id = 'zero'>0</button><div id = 'rightSemiCircle'></div></div>
-                        <button>.</button>
-                    </div>
-                </div>
-                <div id = 'operators'>
-                    <button class = 'divide'>&divide;</button>
-                    <button class = 'multiply'>&times;</button>
-                    <button class = 'subtract'>&minus;</button>
-                    <button class = 'addition'>&plus;</button>
-                    <button id = 'equal' class = 'equals'>&equals;</button>
-                </div>
-            </div>
-        </div>
+    <div id = 'display'></div>
+    <div id = 'grid'>
+        <button id = 'clear'>AC</button>
+        <button id = 'positiveNegative'><sup>&plus;</sup>/<sub>&minus;</sub></button>
+        <button id = 'percent'>&percnt;</button>
+        <button class = 'divide operators'>&divide;</button>
+        <button class = 'digits'>7</button>
+        <button class = 'digits'>8</button>
+        <button class = 'digits'>9</button>
+        <button class = 'multiply operators'>&times;</button>
+        <button class = 'digits'>4</button>
+        <button class = 'digits'>5</button>
+        <button class = 'digits'>6</button>
+        <button class = 'subtract operators'>&minus;</button>
+        <button class = 'digits'>1</button>
+        <button class = 'digits'>2</button>
+        <button class = 'digits'>3</button>
+        <button class = 'addition operators'>&plus;</button>
+        <div id = 'container'><div id = 'leftSemiCircle'></div><button id = 'zero' class = 'digits'>0</button><div id = 'rightSemiCircle'></div></div>
+        <button class = 'digits'>.</button>
+        <button id = 'equal' class = 'equals operators'>&equals;</button>
     </div>
     <script src = 'app.js'></script>
 </body>
