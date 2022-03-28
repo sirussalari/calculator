@@ -30,8 +30,8 @@ function operate(x, operator, y) {
 }
 
 const display = document.querySelector('#display');
-const digits = document.querySelector('#digits').children;
-const operators = document.querySelector('#operators').children;
+const digits = document.querySelectorAll('.digits');
+const operators = document.querySelectorAll('.operators');
 const clear = document.querySelector('#clear');
 const leftSemiCircle = document.querySelector('#leftSemiCircle');
 const rightSemiCircle = document.querySelector('#rightSemiCircle');
