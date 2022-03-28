@@ -33,10 +33,10 @@ const display = document.querySelector('#display');
 const digits = document.querySelector('#digits').children;
 const operators = document.querySelector('#operators').children;
 const clear = document.querySelector('#clear');
-const decimalButton = document.querySelector('#decimal');
 const leftSemiCircle = document.querySelector('#leftSemiCircle');
 const rightSemiCircle = document.querySelector('#rightSemiCircle');
 const zeroButton = document.querySelector('#zero');
+const positiveNegative = document.querySelector('#positiveNegative');
 const zeroButtonElements = [leftSemiCircle, rightSemiCircle, zeroButton];
 let displayValue = '0';
 display.textContent = displayValue;
@@ -46,6 +46,7 @@ let operatorChoice = null;
 let reset = false;
 let init = true;
 let firstNumberChosen = false;
+let negative = false;
 
 for (let digit of digits) {
     digit.addEventListener('click', () => {
@@ -55,7 +56,7 @@ for (let digit of digits) {
             operator.style.backgroundColor = 'orange';
             operator.style.borderColor = 'orange';
         }
-        if (reset || firstNumberChosen || init) {
+        if (reset || firstNumberChosen || init || negative) {
             displayValue = digit.textContent;
             display.textContent = displayValue;
             if (reset) {
@@ -66,6 +67,11 @@ for (let digit of digits) {
             }
             if (firstNumberChosen) {
                 firstNumberChosen = false;
+            }
+            if (negative) {
+                displayValue = '-' + displayValue;
+                display.textContent = displayValue;
+                negative = false;
             }
         }
         else {
@@ -169,4 +175,17 @@ zeroButtonElements.forEach(element => {
             element.style.borderColor = 'rgb(43, 42, 42)';
         })
     })
+})
+
+positiveNegative.addEventListener('click', () => {
+    if (operatorChoice) {
+        displayValue = '-0';
+        display.textContent = displayValue;
+        negative = true;
+    }
+    else {
+        displayValue *= -1;
+        displayValue = displayValue.toString();
+        display.textContent = displayValue;
+    }
 })
