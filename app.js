@@ -50,6 +50,7 @@ let reset = false;
 let init = true;
 let firstNumberChosen = false;
 let negative = false;
+let secondNumberChosen = false;
 
 for (let digit of digits) {
     digit.addEventListener('click', () => {
@@ -80,6 +81,7 @@ for (let digit of digits) {
             }
             if (firstNumberChosen) {
                 firstNumberChosen = false;
+                secondNumberChosen = true;
             }
             if (negative) {
                 displayValue = '-' + displayValue;
@@ -90,7 +92,12 @@ for (let digit of digits) {
         else {
             if (displayValue.length < maxDigits) {
                 if (digit.textContent !== '.') {
-                    displayValue += digit.textContent;
+                    if (displayValue === '0') {
+                        displayValue = digit.textContent;
+                    }
+                    else {
+                        displayValue += digit.textContent;
+                    }
                     display.textContent = displayValue;
                 }
                 else {
@@ -155,6 +162,8 @@ for (let operator of operators) {
                 secondNumber = null;
                 reset = true;
                 firstNumberChosen = false;
+                negative = false;
+                secondNumberChosen = false;
             }
         }
         else {
@@ -198,6 +207,8 @@ for (let operator of operators) {
                         display.textContent = displayValue;
                     }
                 }
+                negative = false;
+                secondNumberChosen = false;
             }
             firstNumber = parseFloat(displayValue);
             firstNumberChosen = true;
@@ -226,6 +237,8 @@ clear.addEventListener('click', () => {
     operatorChoice = null;
     reset = false;
     init = true;
+    negative = false;
+    secondNumberChosen = false;
     clear.textContent = 'AC';
     for (let operator of operators) {
         operator.style.color = 'white';
@@ -242,8 +255,9 @@ zeroButtonElements.forEach(element => {
         }
         if (firstNumberChosen || init) {
             displayValue = '0';
+            firstNumberChosen = false;
         }
-        else {
+        else if (displayValue !== '0' && !negative) {
             displayValue += '0';
         }
         display.textContent = displayValue;
@@ -268,10 +282,19 @@ positiveNegative.addEventListener('click', () => {
             displayValue *= -1;
             displayValue = displayValue.toString();
             display.textContent = displayValue;
+            if (negative) {
+                negative = false;
+            }
+            else if (!secondNumberChosen) {
+                displayValue = '-0';
+                display.textContent = displayValue;
+                negative = true;
+            }
         }
         else {
             displayValue = '-0';
             display.textContent = displayValue;
+            firstNumberChosen = false;
             negative = true;
         }
     }
