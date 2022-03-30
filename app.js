@@ -65,7 +65,12 @@ for (let digit of digits) {
         }
         if (reset || firstNumberChosen || init || negative) {
             display.style.fontSize = '60px';
-            displayValue = digit.textContent;
+            if (digit.textContent === '.') {
+                displayValue += digit.textContent;
+            }
+            else {
+                displayValue = digit.textContent;
+            }
             display.textContent = displayValue;
             if (reset) {
                 reset = false;
@@ -235,10 +240,13 @@ zeroButtonElements.forEach(element => {
         if (displayWidth > 300) {
             display.style.fontSize = '50px';
         }
-        if (displayValue.length < maxDigits) {
-            displayValue += '0';
-            display.textContent = displayValue;
+        if (firstNumberChosen || init) {
+            displayValue = '0';
         }
+        else {
+            displayValue += '0';
+        }
+        display.textContent = displayValue;
     })
     element.addEventListener('mousedown', () => {
         zeroButtonElements.forEach(element => {
