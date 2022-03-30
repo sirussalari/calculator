@@ -40,7 +40,7 @@ const positiveNegative = document.querySelector('#positiveNegative');
 const percent = document.querySelector('#percent');
 const displayStyle = window.getComputedStyle(display);
 const zeroButtonElements = [leftSemiCircle, rightSemiCircle, zeroButton];
-const maxDigits = 11;
+let maxDigits = 11;
 let displayValue = '0';
 display.textContent = displayValue;
 let firstNumber = null;
@@ -311,7 +311,40 @@ positiveNegative.addEventListener('click', () => {
 })
 
 percent.addEventListener('click', () => {
+    reset = true;
     displayValue /= 100;
     displayValue = displayValue.toString();
+    let scientificNotation = false;
+    if (displayValue.includes('e')) {
+        maxDigits = 10;
+        scientificNotation = true;
+    }
+    const amtChars = displayValue.toString().length;
+    if (amtChars > maxDigits) {
+        if (parseFloat(displayValue) !== parseInt(displayValue) && !scientificNotation) {
+            let roundedNum = '';
+            displayValue = displayValue.toString();
+            for (let i = 0; i < maxDigits; i++) {
+                roundedNum += displayValue[i];
+            }
+            displayValue = roundedNum;
+        }
+        else {
+            let expNotation = displayValue.toExponential();
+            console.log(expNotation)
+            let fractionDigits = 5;
+            if (expNotation.length > 10) {
+                while (expNotation.length > 10) {
+                    expNotation = displayValue.toExponential(fractionDigits);
+                    fractionDigits -= 1;
+                }
+            }
+            displayValue = expNotation;
+        }
+    }
     display.textContent = displayValue;
+    const displayWidth = parseFloat(displayStyle.getPropertyValue('width'));
+    if (displayWidth > 300) {
+        display.style.fontSize = '50px';
+    }
 })
