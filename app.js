@@ -38,7 +38,9 @@ const rightSemiCircle = document.querySelector('#rightSemiCircle');
 const zeroButton = document.querySelector('#zero');
 const positiveNegative = document.querySelector('#positiveNegative');
 const percent = document.querySelector('#percent');
+const displayStyle = window.getComputedStyle(display);
 const zeroButtonElements = [leftSemiCircle, rightSemiCircle, zeroButton];
+const maxDigits = 11;
 let displayValue = '0';
 display.textContent = displayValue;
 let firstNumber = null;
@@ -51,6 +53,10 @@ let negative = false;
 
 for (let digit of digits) {
     digit.addEventListener('click', () => {
+        const displayWidth = parseFloat(displayStyle.getPropertyValue('width'));
+        if (displayWidth > 300) {
+            display.style.fontSize = '50px';
+        }
         clear.textContent = 'C';
         for (let operator of operators) {
             operator.style.color = 'white';
@@ -76,14 +82,16 @@ for (let digit of digits) {
             }
         }
         else {
-            if (digit.textContent !== '.') {
-                displayValue += digit.textContent;
-                display.textContent = displayValue;
-            }
-            else {
-                if (!displayValue.includes('.')) {
-                    displayValue += '.';
+            if (displayValue.length < maxDigits) {
+                if (digit.textContent !== '.') {
+                    displayValue += digit.textContent;
                     display.textContent = displayValue;
+                }
+                else {
+                    if (!displayValue.includes('.')) {
+                        displayValue += '.';
+                        display.textContent = displayValue;
+                    }
                 }
             }
         }
