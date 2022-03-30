@@ -66,7 +66,7 @@ for (let digit of digits) {
         if (reset || firstNumberChosen || init || negative) {
             display.style.fontSize = '60px';
             if (digit.textContent === '.') {
-                displayValue += digit.textContent;
+                displayValue  = '0.'
             }
             else {
                 displayValue = digit.textContent;
