@@ -136,7 +136,6 @@ for (let operator of operators) {
                             }
                             displayValue = roundedNum;
                             display.textContent = displayValue;
-                            display.style.fontSize = '50px';
                         }
                         else {
                             let expNotation = displayValue.toExponential();
@@ -150,11 +149,14 @@ for (let operator of operators) {
                             }
                             displayValue = expNotation;
                             display.textContent = displayValue;
-                            display.style.fontSize = '50px';
                         }
                     }
                     else {
                         display.textContent = displayValue;
+                    }
+                    const displayWidth = parseFloat(displayStyle.getPropertyValue('width'));
+                    if (displayWidth > 300) {
+                        display.style.fontSize = '50px';
                     }
                 }
                 firstNumber = null;
@@ -187,7 +189,6 @@ for (let operator of operators) {
                             }
                             displayValue = roundedNum;
                             display.textContent = displayValue;
-                            display.style.fontSize = '50px';
                         }
                         else {
                             let expNotation = displayValue.toExponential();
@@ -200,11 +201,14 @@ for (let operator of operators) {
                             }
                             displayValue = expNotation;
                             display.textContent = displayValue;
-                            display.style.fontSize = '50px';
                         }
                     }
                     else {
                         display.textContent = displayValue;
+                    }
+                    const displayWidth = parseFloat(displayStyle.getPropertyValue('width'));
+                    if (displayWidth > 300) {
+                        display.style.fontSize = '50px';
                     }
                 }
                 negative = false;
@@ -230,6 +234,7 @@ for (let operator of operators) {
 }
 
 clear.addEventListener('click', () => {
+    display.style.fontSize = '60px';
     displayValue = '0';
     display.textContent = displayValue;
     firstNumber = null;
@@ -253,11 +258,11 @@ zeroButtonElements.forEach(element => {
         if (displayWidth > 300) {
             display.style.fontSize = '50px';
         }
-        if (firstNumberChosen || init) {
+        if (firstNumberChosen || init || reset) {
             displayValue = '0';
             firstNumberChosen = false;
         }
-        else if (displayValue !== '0' && !negative) {
+        else if (displayValue !== '0' && !negative && displayValue.length < maxDigits) {
             displayValue += '0';
         }
         display.textContent = displayValue;
