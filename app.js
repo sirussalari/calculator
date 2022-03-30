@@ -64,6 +64,7 @@ for (let digit of digits) {
             operator.style.borderColor = 'orange';
         }
         if (reset || firstNumberChosen || init || negative) {
+            display.style.fontSize = '60px';
             displayValue = digit.textContent;
             display.textContent = displayValue;
             if (reset) {
@@ -173,8 +174,14 @@ clear.addEventListener('click', () => {
 
 zeroButtonElements.forEach(element => {
     element.addEventListener('click', () => {
-        displayValue += '0';
-        display.textContent = displayValue; 
+        const displayWidth = parseFloat(displayStyle.getPropertyValue('width'));
+        if (displayWidth > 300) {
+            display.style.fontSize = '50px';
+        }
+        if (displayValue.length < maxDigits) {
+            displayValue += '0';
+            display.textContent = displayValue;
+        }
     })
     element.addEventListener('mousedown', () => {
         zeroButtonElements.forEach(element => {
