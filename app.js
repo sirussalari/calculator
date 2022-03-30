@@ -52,6 +52,66 @@ let firstNumberChosen = false;
 let negative = false;
 let secondNumberChosen = false;
 
+class number {
+    constructor(num) {
+        this.num = num;
+    }
+    get formatted() {
+        return this.format();
+    }
+    format() {
+        let num = this.num;
+        if (num.includes(',')) {
+            let count = '';
+            num = num.split(',');
+            for (let args of num) {
+                count += args;
+            }
+            num = count;
+        }
+        let newNum = '';
+        let intSplitFloat = null;
+        if (num > 999 && num < 1000000000 || num < -999 && num > -1000000000) {
+            if (num.includes('.')) {
+                intSplitFloat = num.split('.');
+                newNum = intSplitFloat[0];
+            }
+            if (!newNum) {
+                newNum = num.split('');
+            }
+            else {
+                newNum = newNum.split('');
+            }
+            newNum.splice(-3, 0, ',');
+            newNum = newNum.join('');
+            if (num > 999999 || num < -999999) {
+                newNum = newNum.split('');
+                newNum.splice(-7 , 0, ',');
+                newNum = newNum.join('');
+            }
+            if (intSplitFloat) {
+                newNum = newNum + `.${intSplitFloat[1]}`
+            }
+            num = newNum;
+        }
+        return num;
+    }
+    
+    get removeCommas() {
+        return this.remove();
+    }
+    remove() {
+        let num = this.num;
+        let count = '';
+        num = num.split(',');
+        for (let args of num) {
+            count += args;
+        }
+        num = count;
+        return num;
+    }
+}
+
 for (let digit of digits) {
     digit.addEventListener('click', () => {
         const displayWidth = parseFloat(displayStyle.getPropertyValue('width'));
@@ -90,13 +150,16 @@ for (let digit of digits) {
             }
         }
         else {
-            if (displayValue.length < maxDigits) {
+            const firstNum = new number(displayValue);
+            if (displayValue.length < maxDigits || firstNum.removeCommas >= -99999999 && firstNum.removeCommas < 0) {
                 if (digit.textContent !== '.') {
                     if (displayValue === '0') {
                         displayValue = digit.textContent;
                     }
                     else {
                         displayValue += digit.textContent;
+                        const newNum = new number(displayValue);
+                        displayValue = newNum.formatted;
                     }
                     display.textContent = displayValue;
                 }
@@ -120,14 +183,16 @@ for (let operator of operators) {
         }
         if (operator.classList.contains('equals')) {
             if (firstNumber !== null) {
-                secondNumber = parseFloat(displayValue);
+                const newSecond = new number(displayValue);
+                secondNumber = newSecond.removeCommas;
+                secondNumber = parseFloat(secondNumber);
                 displayValue = operate(firstNumber, operatorChoice, secondNumber);
                 if (operatorChoice === 'divide' && secondNumber === 0) {
                     display.textContent = 'ERROR'
                 }
                 else {
-                    const amtChars = displayValue.toString().length;
-                    if (amtChars > maxDigits) {
+                    const check = new number(displayValue.toString());
+                    if (check.formatted.length > maxDigits || displayValue > 999999999 || displayValue < -999999999) {
                         if (parseFloat(displayValue) !== parseInt(displayValue)) {
                             let roundedNum = '';
                             displayValue = displayValue.toString();
@@ -135,6 +200,21 @@ for (let operator of operators) {
                                 roundedNum += displayValue[i];
                             }
                             displayValue = roundedNum;
+                            const newNum = new number(displayValue);
+                            displayValue = newNum.formatted;
+                            if (displayValue.length > maxDigits) {
+                                displayValue = newNum.removeCommas;
+                                displayValue = parseFloat(displayValue);
+                                let expNotation = displayValue.toExponential();
+                                let fractionDigits = 5;
+                                if (expNotation.length > 10) {
+                                    while (expNotation.length > 10) {
+                                        expNotation = displayValue.toExponential(fractionDigits);
+                                        fractionDigits -= 1;
+                                    }
+                                }
+                                displayValue = expNotation;
+                            }
                             display.textContent = displayValue;
                         }
                         else {
@@ -148,12 +228,14 @@ for (let operator of operators) {
                                 }
                             }
                             displayValue = expNotation;
-                            display.textContent = displayValue;
                         }
                     }
                     else {
-                        display.textContent = displayValue;
+                        displayValue = displayValue.toString();
+                        const newNum = new number(displayValue);
+                        displayValue = newNum.formatted;
                     }
+                    display.textContent = displayValue;
                     const displayWidth = parseFloat(displayStyle.getPropertyValue('width'));
                     if (displayWidth > 300) {
                         display.style.fontSize = '50px';
@@ -173,14 +255,16 @@ for (let operator of operators) {
             operator.style.backgroundColor = 'white';
             operator.style.borderColor = 'white';
             if (operatorChoice && !firstNumberChosen) {
-                secondNumber = parseFloat(displayValue);
+                const newSecond = new number(displayValue);
+                secondNumber = newSecond.removeCommas;
+                secondNumber = parseFloat(secondNumber);
                 displayValue = operate(firstNumber, operatorChoice, secondNumber);
                 if (operatorChoice === 'divide' && secondNumber === 0) {
                     display.textContent = 'ERROR'
                 }
                 else {
-                    const amtChars = displayValue.toString().length;
-                    if (amtChars > maxDigits) {
+                    const check = new number(displayValue.toString());
+                    if (check.formatted.length > maxDigits || displayValue > 999999999 || displayValue < -999999999) {
                         if (parseFloat(displayValue) !== parseInt(displayValue)) {
                             let roundedNum = '';
                             displayValue = displayValue.toString();
@@ -188,6 +272,21 @@ for (let operator of operators) {
                                 roundedNum += displayValue[i];
                             }
                             displayValue = roundedNum;
+                            const newNum = new number(displayValue);
+                            displayValue = newNum.formatted;
+                            if (displayValue.length > maxDigits) {
+                                displayValue = newNum.removeCommas;
+                                displayValue = parseFloat(displayValue);
+                                let expNotation = displayValue.toExponential();
+                                let fractionDigits = 5;
+                                if (expNotation.length > 10) {
+                                    while (expNotation.length > 10) {
+                                        expNotation = displayValue.toExponential(fractionDigits);
+                                        fractionDigits -= 1;
+                                    }
+                                }
+                                displayValue = expNotation;
+                            }
                             display.textContent = displayValue;
                         }
                         else {
@@ -200,12 +299,14 @@ for (let operator of operators) {
                                 }
                             }
                             displayValue = expNotation;
-                            display.textContent = displayValue;
                         }
                     }
                     else {
-                        display.textContent = displayValue;
+                        displayValue = displayValue.toString();
+                        const newNum = new number(displayValue);
+                        displayValue = newNum.formatted;
                     }
+                    display.textContent = displayValue;
                     const displayWidth = parseFloat(displayStyle.getPropertyValue('width'));
                     if (displayWidth > 300) {
                         display.style.fontSize = '50px';
@@ -214,7 +315,9 @@ for (let operator of operators) {
                 negative = false;
                 secondNumberChosen = false;
             }
-            firstNumber = parseFloat(displayValue);
+            const newFirst = new number(displayValue);
+            firstNumber = newFirst.removeCommas;
+            firstNumber = parseFloat(firstNumber);
             firstNumberChosen = true;
             operatorChoice = operator.textContent;
             if (operator.classList.contains('addition')) {
@@ -254,6 +357,11 @@ clear.addEventListener('click', () => {
 
 zeroButtonElements.forEach(element => {
     element.addEventListener('click', () => {
+        for (let operator of operators) {
+            operator.style.color = 'white';
+            operator.style.backgroundColor = 'orange';
+            operator.style.borderColor = 'orange';
+        }
         const displayWidth = parseFloat(displayStyle.getPropertyValue('width'));
         if (displayWidth > 300) {
             display.style.fontSize = '50px';
@@ -264,6 +372,8 @@ zeroButtonElements.forEach(element => {
         }
         else if (displayValue !== '0' && !negative && displayValue.length < maxDigits) {
             displayValue += '0';
+            const newNum = new number(displayValue);
+            displayValue = newNum.formatted;
         }
         display.textContent = displayValue;
     })
@@ -282,23 +392,22 @@ zeroButtonElements.forEach(element => {
 })
 
 positiveNegative.addEventListener('click', () => {
+    const firstNum = new number(displayValue);
+    displayValue = firstNum.removeCommas;
     if (operatorChoice) {
         if (!firstNumberChosen) {
             displayValue *= -1;
             displayValue = displayValue.toString();
-            display.textContent = displayValue;
             if (negative) {
                 negative = false;
             }
             else if (!secondNumberChosen) {
                 displayValue = '-0';
-                display.textContent = displayValue;
                 negative = true;
             }
         }
         else {
             displayValue = '-0';
-            display.textContent = displayValue;
             firstNumberChosen = false;
             negative = true;
         }
@@ -306,32 +415,35 @@ positiveNegative.addEventListener('click', () => {
     else {
         displayValue *= -1;
         displayValue = displayValue.toString();
-        display.textContent = displayValue;
     }
-})
-
-percent.addEventListener('click', () => {
-    reset = true;
-    displayValue /= 100;
-    displayValue = displayValue.toString();
-    let scientificNotation = false;
-    if (displayValue.includes('e')) {
-        maxDigits = 10;
-        scientificNotation = true;
-    }
-    const amtChars = displayValue.toString().length;
-    if (amtChars > maxDigits) {
-        if (parseFloat(displayValue) !== parseInt(displayValue) && !scientificNotation) {
+    const check = new number(displayValue);
+    if (check.formatted.length > maxDigits || displayValue > 999999999 || displayValue < -999999999) {
+        if (parseFloat(displayValue) !== parseInt(displayValue)) {
             let roundedNum = '';
             displayValue = displayValue.toString();
             for (let i = 0; i < maxDigits; i++) {
                 roundedNum += displayValue[i];
             }
             displayValue = roundedNum;
+            const newNum = new number(displayValue);
+            displayValue = newNum.formatted;
+            if (displayValue.length > maxDigits) {
+                displayValue = newNum.removeCommas;
+                displayValue = parseFloat(displayValue);
+                let expNotation = displayValue.toExponential();
+                let fractionDigits = 5;
+                if (expNotation.length > 10) {
+                    while (expNotation.length > 10) {
+                        expNotation = displayValue.toExponential(fractionDigits);
+                        fractionDigits -= 1;
+                    }
+                }
+                displayValue = expNotation;
+            }
         }
         else {
+            displayValue = parseFloat(displayValue);
             let expNotation = displayValue.toExponential();
-            console.log(expNotation)
             let fractionDigits = 5;
             if (expNotation.length > 10) {
                 while (expNotation.length > 10) {
@@ -342,6 +454,56 @@ percent.addEventListener('click', () => {
             displayValue = expNotation;
         }
     }
+    const newNum = new number(displayValue);
+    displayValue = newNum.formatted;
+    display.textContent = displayValue;
+})
+
+percent.addEventListener('click', () => {
+    reset = true;
+    const firstNum = new number(displayValue);
+    displayValue = firstNum.removeCommas
+    displayValue /= 100;
+    displayValue = displayValue.toString();
+    const check = new number(displayValue);
+    if (check.formatted.length > maxDigits) {
+        if (parseFloat(displayValue) !== parseInt(displayValue)) {
+            let roundedNum = '';
+            displayValue = displayValue.toString();
+            for (let i = 0; i < maxDigits; i++) {
+                roundedNum += displayValue[i];
+            }
+            displayValue = roundedNum;
+            const newNum = new number(displayValue);
+            displayValue = newNum.formatted;
+            if (displayValue.length > maxDigits) {
+                displayValue = newNum.removeCommas;
+                displayValue = parseFloat(displayValue);
+                let expNotation = displayValue.toExponential();
+                let fractionDigits = 5;
+                if (expNotation.length > 10) {
+                    while (expNotation.length > 10) {
+                        expNotation = displayValue.toExponential(fractionDigits);
+                        fractionDigits -= 1;
+                    }
+                }
+                displayValue = expNotation;
+            }
+        }
+        else {
+            let expNotation = displayValue.toExponential();
+            let fractionDigits = 5;
+            if (expNotation.length > 10) {
+                while (expNotation.length > 10) {
+                    expNotation = displayValue.toExponential(fractionDigits);
+                    fractionDigits -= 1;
+                }
+            }
+            displayValue = expNotation;
+        }
+    }
+    const newNum = new number(displayValue);
+    displayValue = newNum.formatted;
     display.textContent = displayValue;
     const displayWidth = parseFloat(displayStyle.getPropertyValue('width'));
     if (displayWidth > 300) {
