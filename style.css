@@ -43,13 +43,13 @@ button {
     font-size: 35px;
 }
 
-.digits {
+.digits, #zero {
     background-color: rgb(43, 42, 42);
     border-color: rgb(43, 42, 42);
     color: white;
 }
 
-.digits:active {
+.digits:active, #zero:active {
     background-color: grey;
     border-color: grey;
 }
