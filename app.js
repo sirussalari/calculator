@@ -114,7 +114,36 @@ for (let operator of operators) {
                     display.textContent = 'ERROR'
                 }
                 else {
-                    display.textContent = displayValue;
+                    const amtChars = displayValue.toString().length;
+                    if (amtChars > maxDigits) {
+                        if (parseFloat(displayValue) !== parseInt(displayValue)) {
+                            let roundedNum = '';
+                            displayValue = displayValue.toString();
+                            for (let i = 0; i < maxDigits; i++) {
+                                roundedNum += displayValue[i];
+                            }
+                            displayValue = roundedNum;
+                            display.textContent = displayValue;
+                            display.style.fontSize = '50px';
+                        }
+                        else {
+                            let expNotation = displayValue.toExponential();
+                            console.log(expNotation)
+                            let fractionDigits = 5;
+                            if (expNotation.length > 10) {
+                                while (expNotation.length > 10) {
+                                    expNotation = displayValue.toExponential(fractionDigits);
+                                    fractionDigits -= 1;
+                                }
+                            }
+                            displayValue = expNotation;
+                            display.textContent = displayValue;
+                            display.style.fontSize = '50px';
+                        }
+                    }
+                    else {
+                        display.textContent = displayValue;
+                    }
                 }
                 firstNumber = null;
                 operatorChoice = '';
@@ -134,7 +163,35 @@ for (let operator of operators) {
                     display.textContent = 'ERROR'
                 }
                 else {
-                    display.textContent = displayValue;
+                    const amtChars = displayValue.toString().length;
+                    if (amtChars > maxDigits) {
+                        if (parseFloat(displayValue) !== parseInt(displayValue)) {
+                            let roundedNum = '';
+                            displayValue = displayValue.toString();
+                            for (let i = 0; i < maxDigits; i++) {
+                                roundedNum += displayValue[i];
+                            }
+                            displayValue = roundedNum;
+                            display.textContent = displayValue;
+                            display.style.fontSize = '50px';
+                        }
+                        else {
+                            let expNotation = displayValue.toExponential();
+                            let fractionDigits = 5;
+                            if (expNotation.length > 10) {
+                                while (expNotation.length > 10) {
+                                    expNotation = displayValue.toExponential(fractionDigits);
+                                    fractionDigits -= 1;
+                                }
+                            }
+                            displayValue = expNotation;
+                            display.textContent = displayValue;
+                            display.style.fontSize = '50px';
+                        }
+                    }
+                    else {
+                        display.textContent = displayValue;
+                    }
                 }
             }
             firstNumber = parseFloat(displayValue);
