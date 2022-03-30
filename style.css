@@ -24,12 +24,13 @@ body {
 }
 
 #display {
-    position: relative;
-    left: 38%;
     flex: 1;
     color: white;
     font-size: 60px;
     font-weight: normal;
+    max-width: 330px;
+    align-self: flex-end;
+    display: inline-block;
 }
 
 button {
