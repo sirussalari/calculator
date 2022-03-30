@@ -184,9 +184,16 @@ zeroButtonElements.forEach(element => {
 
 positiveNegative.addEventListener('click', () => {
     if (operatorChoice) {
-        displayValue = '-0';
-        display.textContent = displayValue;
-        negative = true;
+        if (!firstNumberChosen) {
+            displayValue *= -1;
+            displayValue = displayValue.toString();
+            display.textContent = displayValue;
+        }
+        else {
+            displayValue = '-0';
+            display.textContent = displayValue;
+            negative = true;
+        }
     }
     else {
         displayValue *= -1;
